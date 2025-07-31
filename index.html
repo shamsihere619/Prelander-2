@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Special Offer</title>
+  <style>
+    body {
+      background-color: #f0f0f0;
+      font-family: Arial, sans-serif;
+      text-align: center;
+      padding-top: 60px;
+    }
+    h1 {
+      color: #333;
+    }
+    #geoMessage, #question, #countdown, #finalStep, #warning {
+      margin-top: 20px;
+    }
+    .btn, .choice-btn {
+      display: inline-block;
+      background-color: #007bff;
+      color: white;
+      padding: 12px 25px;
+      font-size: 16px;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      margin: 10px;
+      transition: background 0.3s ease;
+    }
+    .btn:hover, .choice-btn:hover {
+      background-color: #0056b3;
+    }
+    #warning {
+      color: red;
+      font-size: 18px;
+      display: none;
+    }
+    #countdown, #finalStep {
+      display: none;
+    }
+    #continueBtn {
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Welcome to Our Special Offer!</h1>
+  <div id="geoMessage">Checking your location...</div>
+  <div id="question">
+    <p>Are you ready to claim your reward?</p>
+    <button class="choice-btn" onclick="startCountdown()">Yes</button>
+    <button class="choice-btn" onclick="denyAccess()">No</button>
+  </div>
+  <div id="countdown">Please wait <span id="timer">5</span> seconds...</div>
+  <div id="finalStep">
+    <a id="continueBtn" href="https://otieu.com/4/9647807" target="_blank">
+      <button class="btn">Continue</button>
+    </a>
+  </div>
+  <div id="warning">Access Denied: Suspicious activity detected.</div>
+
+  <!-- ✅ BeMob tracking pixel (invisible) -->
+  <img src="https://wcyhr.bemobtrcks.com/go/36539d0e-85b4-47d3-93f1-24c74d4d9263" width="1" height="1" style="display:none;" />
+
+  <script>
+    // Geo API
+    fetch('https://ipapi.co/json/')
+      .then(response => response.json())
+      .then(data => {
+        document.getElementById('geoMessage').textContent =
+          "Special offer just for visitors from " + data.country_name + "!";
+      })
+      .catch(() => {
+        document.getElementById('geoMessage').textContent = "Welcome!";
+      });
+
+    // Bot Detection
+    function isBot() {
+      const ua = navigator.userAgent.toLowerCase();
+      const botPattern = /bot|crawl|spider|crawling|headless|phantom|slurp/i;
+      const isHeadless = navigator.webdriver || window.outerWidth === 0 || !navigator.plugins.length;
+      return botPattern.test(ua) || isHeadless;
+    }
+
+    if (isBot()) {
+      document.getElementById('geoMessage').style.display = 'none';
+      document.getElementById('question').style.display = 'none';
+      document.getElementById('warning').style.display = 'block';
+    }
+
+    // Start countdown
+    function startCountdown() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("countdown").style.display = "block";
+
+      let seconds = 5;
+      const timerElement = document.getElementById("timer");
+
+      const countdown = setInterval(() => {
+        seconds--;
+        timerElement.textContent = seconds;
+        if (seconds <= 0) {
+          clearInterval(countdown);
+          document.getElementById("countdown").style.display = "none";
+          document.getElementById("finalStep").style.display = "block";
+        }
+      }, 1000);
+    }
+
+    // Deny access
+    function denyAccess() {
+      document.getElementById("question").style.display = "none";
+      document.getElementById("geoMessage").style.display = "none";
+      document.getElementById("warning").style.display = "block";
+    }
+  </script>
+</body>
+</html>
